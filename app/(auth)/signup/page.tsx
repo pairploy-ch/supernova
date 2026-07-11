@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { getCurrentUser } from '@/lib/dal';
+import AuthTabs from '@/components/auth/AuthTabs';
 import SignupForm from './SignupForm';
 
 export default async function SignupPage() {
@@ -18,15 +19,19 @@ export default async function SignupPage() {
 
       <div className="max-w-md mx-auto px-4 py-16">
         <div className="card p-8">
-          <h2 style={{ display: 'inline-block', fontSize: '18px', paddingBottom: '10px', borderBottom: '3px solid var(--cat-blue)', marginBottom: '24px' }}>
-            Join Supernova
-          </h2>
+          <AuthTabs active="register" />
+
+          <div className="section-title-wrap pink" style={{ marginBottom: '24px' }}>
+            <h2 style={{ color: '#111', fontWeight: 500, fontSize: '18px', letterSpacing: '0.02em', textTransform: 'uppercase', margin: 0 }}>
+              Create Your Account
+            </h2>
+          </div>
 
           <SignupForm />
 
           <p className="text-sm mt-6 text-center" style={{ color: 'var(--text-muted)', textTransform: 'none' }}>
             มีบัญชีอยู่แล้ว?{' '}
-            <Link href="/login" style={{ color: 'var(--cat-blue)', fontWeight: 600 }}>
+            <Link href="/login" style={{ color: 'var(--accent-pink)', fontWeight: 600 }}>
               เข้าสู่ระบบ
             </Link>
           </p>

@@ -1,22 +1,25 @@
 'use client';
 
+import { useTransition } from 'react';
 import { Trash2 } from 'lucide-react';
 import { deleteArticle } from './actions';
 
 export default function DeleteArticleButton({ id }: { id: string }) {
+  const [pending, startTransition] = useTransition();
+
   return (
     <button
       type="button"
-      style={{ color: '#e11d48', background: 'none', border: 'none', cursor: 'pointer' }}
-      onClick={(e) => {
-        if (!confirm('ลบข่าวนี้ใช่หรือไม่?')) {
-          e.preventDefault();
-          return;
-        }
-        deleteArticle(id);
+      disabled={pending}
+      style={{ color: '#e11d48', background: 'none', border: 'none', cursor: pending ? 'default' : 'pointer', opacity: pending ? 0.5 : 1 }}
+      onClick={() => {
+        if (!confirm('ลบข่าวนี้ใช่หรือไม่?')) return;
+        startTransition(async () => {
+          await deleteArticle(id);
+        });
       }}
     >
-      <Trash2 size={15} />
+      {pending ? <span className="spinner-sm dark" /> : <Trash2 size={15} />}
     </button>
   );
 }

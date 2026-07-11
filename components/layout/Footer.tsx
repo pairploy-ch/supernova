@@ -1,6 +1,7 @@
 "use client";
 import Link from 'next/link';
 import { GAMES_LIST } from '@/lib/games';
+import { SOCIAL_LINKS } from '@/components/icons/SocialIcons';
 
 export default function Footer() {
   return (
@@ -28,10 +29,11 @@ export default function Footer() {
 
           {/* Games */}
           <div>
-            <h4 style={{ color: '#fff', fontWeight: 700, fontSize: '13px', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-              GAMES
-            </h4>
-            <div style={{ height: '2px', background: 'linear-gradient(90deg, #e91e8c, transparent)', marginBottom: '16px', borderRadius: '2px' }} />
+            <div className="section-title-wrap pink on-dark" style={{ marginBottom: '16px' }}>
+              <h4 style={{ color: '#fff', fontWeight: 500, fontSize: '13px', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>
+                GAMES
+              </h4>
+            </div>
             <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {GAMES_LIST.map((g) => (
                 <li key={g.code}>
@@ -48,10 +50,11 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 style={{ color: '#fff', fontWeight: 700, fontSize: '13px', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-              QUICK LINK
-            </h4>
-            <div style={{ height: '2px', background: 'linear-gradient(90deg, #e91e8c, transparent)', marginBottom: '16px', borderRadius: '2px' }} />
+            <div className="section-title-wrap pink on-dark" style={{ marginBottom: '16px' }}>
+              <h4 style={{ color: '#fff', fontWeight: 500, fontSize: '13px', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>
+                QUICK LINK
+              </h4>
+            </div>
             <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {[{ label: 'Games', href: '/games' }, { label: 'News', href: '/news' }, { label: 'Events', href: '/events' }, { label: 'Community', href: '/community' }].map((g) => (
                 <li key={g.href}>
@@ -68,10 +71,11 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 style={{ color: '#fff', fontWeight: 700, fontSize: '13px', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-              CONTACT
-            </h4>
-            <div style={{ height: '2px', background: 'linear-gradient(90deg, #e91e8c, transparent)', marginBottom: '16px', borderRadius: '2px' }} />
+            <div className="section-title-wrap pink on-dark" style={{ marginBottom: '16px' }}>
+              <h4 style={{ color: '#fff', fontWeight: 500, fontSize: '13px', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>
+                CONTACT
+              </h4>
+            </div>
 
             {/* Email input */}
             <div style={{
@@ -102,25 +106,21 @@ export default function Footer() {
 
             {/* Social icons */}
             <div style={{ display: 'flex', gap: '10px' }}>
-              {[
-                { bg: '#1877f2', label: 'f', title: 'Facebook' },
-                { bg: '#1da1f2', label: '🐦', title: 'Twitter' },
-                { bg: '#000000', label: '◉', title: 'TikTok' },
-              ].map((s, i) => (
+              {SOCIAL_LINKS.map((s) => (
                 <button
-                  key={i}
-                  title={s.title}
+                  key={s.name}
+                  title={s.name}
                   style={{
                     width: '38px', height: '38px', borderRadius: '50%',
                     background: s.bg, border: 'none', cursor: 'pointer',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '15px', color: 'white', fontWeight: 700,
+                    color: 'white',
                     transition: 'transform 0.2s, opacity 0.2s',
                   }}
                   onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.1)')}
                   onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
                 >
-                  {s.label}
+                  <s.Icon size={15} />
                 </button>
               ))}
             </div>

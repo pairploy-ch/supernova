@@ -19,7 +19,7 @@ export default function NewsCard({
     <Link
       href={`/news/${slug}`}
       className="news-card-link"
-      style={{ background: '#fff', border: '1px solid #eee', borderRadius: '8px', overflow: 'hidden', display: 'block', textDecoration: 'none' }}
+      style={{ background: '#fff', border: '1px solid #eee', borderRadius: 0, overflow: 'hidden', display: 'block', textDecoration: 'none' }}
     >
       <div className="news-card-img" style={{ height: compact ? '140px' : '180px' }}>
         {imageUrl ? (
@@ -38,7 +38,7 @@ export default function NewsCard({
       </div>
       <div className="p-3">
         <span className={`tag ${tagClass} mb-2 inline-block`}>{tag}</span>
-        <h3 style={{ color: '#111' }} className="font-bold text-sm leading-tight mb-1 line-clamp-2">
+        <h3 style={{ color: '#111' }} className="font-medium text-sm leading-tight mb-1 line-clamp-2">
           {title}
         </h3>
         {!compact && excerpt && (

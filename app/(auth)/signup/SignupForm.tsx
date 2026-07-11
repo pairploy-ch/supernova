@@ -15,18 +15,18 @@ export default function SignupForm() {
     <form action={action} className="space-y-5">
       <div>
         <label className="form-label" htmlFor="username">Username</label>
-        <input className="form-input-pill" id="username" name="username" type="text" required autoComplete="username" minLength={3} maxLength={24} />
+        <input className="form-input-pill" id="username" name="username" type="text" placeholder="Enter your username here..." required autoComplete="username" minLength={3} maxLength={24} />
       </div>
       <div>
-        <label className="form-label" htmlFor="email">Email</label>
-        <input className="form-input-pill" id="email" name="email" type="email" required autoComplete="email" />
+        <label className="form-label" htmlFor="email">Email Address</label>
+        <input className="form-input-pill" id="email" name="email" type="email" placeholder="Enter your email here..." required autoComplete="email" />
       </div>
       <div>
         <label className="form-label" htmlFor="password">Password</label>
-        <input className="form-input-pill" id="password" name="password" type="password" required autoComplete="new-password" minLength={8} />
+        <input className="form-input-pill" id="password" name="password" type="password" placeholder="Enter your password here..." required autoComplete="new-password" minLength={8} />
       </div>
       {state?.error && <p className="form-error">{state.error}</p>}
-      <button className="btn-primary w-full justify-center" type="submit" disabled={pending} style={{ background: 'var(--cat-blue)' }}>
+      <button className="btn-primary w-full justify-center" type="submit" disabled={pending} style={{ background: 'var(--accent-pink)' }}>
         {pending ? 'กำลังสมัคร...' : 'สมัครสมาชิก'}
         <ChevronRight size={14} />
       </button>

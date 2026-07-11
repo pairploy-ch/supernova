@@ -61,7 +61,7 @@ export default function ArticleForm({
 
       <div>
         <label className="form-label" htmlFor="cover">รูปปก</label>
-        {preview && <img src={preview} alt="" style={{ width: '200px', borderRadius: '8px', marginBottom: '8px' }} />}
+        {preview && <img src={preview} alt="" style={{ width: '200px', borderRadius: 0, marginBottom: '8px' }} />}
         <input
           className="text-sm"
           id="cover"

@@ -1,11 +1,13 @@
 import Link from 'next/link';
-import { GAMES_LIST } from '@/lib/games';
+import { getAllGamesFull } from '@/lib/supabase/queries/games';
 
-export default function GamesPage() {
+export default async function GamesPage() {
+  const games = await getAllGamesFull();
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-4xl font-black mb-2" style={{ color: 'var(--text-primary)' }}>
+        <h1 className="text-4xl font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
           <span className="gradient-text">Games</span>
         </h1>
         <p style={{ color: 'var(--text-muted)' }} className="text-sm">
@@ -14,7 +16,7 @@ export default function GamesPage() {
       </div>
 
       <div className="grid gap-6">
-        {GAMES_LIST.map((game) => (
+        {games.map((game) => (
           <Link key={game.code} href={`/games/${game.slug}`} className="card block group overflow-hidden">
             <div style={{ height: '200px', position: 'relative', display: 'flex', alignItems: 'center' }}>
               <img
@@ -32,7 +34,7 @@ export default function GamesPage() {
                   <div style={{ color: game.accent, fontSize: '11px', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '4px' }}>
                     {game.subtitle}
                   </div>
-                  <h2 className="text-white font-black text-4xl md:text-5xl group-hover:opacity-90 transition-opacity" style={{ textShadow: `0 0 40px ${game.accent}40` }}>
+                  <h2 className="text-white font-medium text-4xl md:text-5xl group-hover:opacity-90 transition-opacity" style={{ textShadow: `0 0 40px ${game.accent}40` }}>
                     {game.name}
                   </h2>
                   <p style={{ color: 'rgba(255,255,255,0.55)', maxWidth: '400px' }} className="text-sm mt-2">

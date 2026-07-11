@@ -80,6 +80,9 @@ export default async function ProfileEditPage() {
               initialDisplayName={profile?.displayName ?? ''}
               initialBio={profile?.bio ?? ''}
               initialAvatarUrl={profile?.avatarUrl ?? null}
+              initialCoverImageUrl={profile?.coverImageUrl ?? null}
+              initialAvatarFrame={profile?.avatarFrame ?? 'none'}
+              initialGameIds={profile?.gameIds ?? {}}
             />
           </div>
         </div>

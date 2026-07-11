@@ -2,12 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Newspaper, MessagesSquare } from 'lucide-react';
+import { LayoutDashboard, Newspaper, MessagesSquare, Gamepad2, Users } from 'lucide-react';
 
 const ITEMS = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/articles', label: 'ข่าว', icon: Newspaper },
   { href: '/admin/forum', label: 'กระทู้', icon: MessagesSquare },
+  { href: '/admin/games', label: 'เกมส์', icon: Gamepad2 },
+  { href: '/admin/users', label: 'ผู้ใช้', icon: Users },
 ];
 
 export default function AdminSidebar() {

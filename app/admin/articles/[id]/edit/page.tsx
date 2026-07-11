@@ -14,7 +14,7 @@ export default async function EditArticlePage({
 
   return (
     <div>
-      <h1 className="text-xl font-black mb-6" style={{ color: 'var(--text-primary)' }}>แก้ไขข่าว</h1>
+      <h1 className="text-xl font-medium mb-6" style={{ color: 'var(--text-primary)' }}>แก้ไขข่าว</h1>
       <div className="card p-6">
         <ArticleForm action={updateArticle} initial={article} />
       </div>

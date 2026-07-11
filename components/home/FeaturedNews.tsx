@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getLatestArticles } from '@/lib/supabase/queries/articles';
 import { ARTICLE_CATEGORY_META } from '@/lib/articleCategory';
+import { SOCIAL_LINKS } from '@/components/icons/SocialIcons';
 
 export default async function FeaturedNews() {
   const [latest, events] = await Promise.all([
@@ -15,7 +16,7 @@ export default async function FeaturedNews() {
 
         {/* ── LEFT: big + 3 small ── */}
         {big && (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: 'auto', gap: '4px', borderRadius: '10px', overflow: 'hidden' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: 'auto', gap: '4px', borderRadius: 0, overflow: 'hidden' }}>
 
             {/* Big card — spans full height left */}
             <Link
@@ -38,7 +39,7 @@ export default async function FeaturedNews() {
                 <span className={`tag ${ARTICLE_CATEGORY_META[big.category].tagClass}`}>
                   {ARTICLE_CATEGORY_META[big.category].label}
                 </span>
-                <h2 style={{ color: '#fff', fontWeight: 900, fontSize: '22px', lineHeight: 1.2, margin: '10px 0 8px' }}>
+                <h2 style={{ color: '#fff', fontWeight: 500, fontSize: '22px', lineHeight: 1.2, margin: '10px 0 8px' }}>
                   {big.title}
                 </h2>
                 {big.excerpt && (
@@ -86,23 +87,20 @@ export default async function FeaturedNews() {
 
           {/* Social Media */}
           <div>
-            <h3 style={{ color: '#111', fontWeight: 800, fontSize: '14px', letterSpacing: '0.05em', textTransform: 'uppercase', margin: '0 0 16px' }}>
-              SOCIAL MEDIA
-            </h3>
-            <div style={{ height: '2px', background: 'linear-gradient(90deg, #e91e8c, #f59e0b)', marginBottom: '16px', borderRadius: '2px' }} />
+            <div className="section-title-wrap pink" style={{ marginBottom: '16px' }}>
+              <h3 style={{ color: '#111', fontWeight: 500, fontSize: '14px', letterSpacing: '0.05em', textTransform: 'uppercase', margin: 0 }}>
+                SOCIAL MEDIA
+              </h3>
+            </div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              {[
-                { bg: '#1877f2', label: 'f' },
-                { bg: '#1da1f2', label: '🐦' },
-                { bg: '#000', label: '⬛' },
-                { bg: '#ff0050', label: '♪' },
-              ].map((s, i) => (
+              {SOCIAL_LINKS.map((s) => (
                 <div
-                  key={i}
+                  key={s.name}
                   className="social-icon"
-                  style={{ background: s.bg, fontSize: '16px', color: 'white', fontWeight: 700 }}
+                  title={s.name}
+                  style={{ background: s.bg, color: 'white' }}
                 >
-                  {s.label}
+                  <s.Icon size={16} />
                 </div>
               ))}
             </div>
@@ -110,10 +108,11 @@ export default async function FeaturedNews() {
 
           {/* Upcoming Events */}
           <div style={{ flex: 1 }}>
-            <h3 style={{ color: '#111', fontWeight: 800, fontSize: '14px', letterSpacing: '0.05em', textTransform: 'uppercase', margin: '0 0 12px' }}>
-              UPCOMING EVENT
-            </h3>
-            <div style={{ height: '2px', background: 'linear-gradient(90deg, #e91e8c, #f59e0b)', marginBottom: '16px', borderRadius: '2px' }} />
+            <div className="section-title-wrap pink" style={{ marginBottom: '16px' }}>
+              <h3 style={{ color: '#111', fontWeight: 500, fontSize: '14px', letterSpacing: '0.05em', textTransform: 'uppercase', margin: 0 }}>
+                UPCOMING EVENT
+              </h3>
+            </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
               {events.map((article) => (
@@ -131,10 +130,10 @@ export default async function FeaturedNews() {
                     <img
                       src={article.coverImageUrl}
                       alt=""
-                      style={{ width: '64px', height: '46px', objectFit: 'cover', borderRadius: '5px', flexShrink: 0 }}
+                      style={{ width: '64px', height: '46px', objectFit: 'cover', borderRadius: 0, flexShrink: 0 }}
                     />
                   ) : (
-                    <div style={{ width: '64px', height: '46px', borderRadius: '5px', flexShrink: 0, background: 'var(--bg-card)' }} />
+                    <div style={{ width: '64px', height: '46px', borderRadius: 0, flexShrink: 0, background: 'var(--bg-card)' }} />
                   )}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <p style={{ color: '#111', fontSize: '12px', fontWeight: 700, lineHeight: 1.35, margin: '0 0 3px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>

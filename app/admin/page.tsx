@@ -8,11 +8,12 @@ export default async function AdminDashboardPage() {
     { label: 'เผยแพร่แล้ว', value: counts.publishedArticles },
     { label: 'กระทู้ทั้งหมด', value: counts.totalThreads },
     { label: 'ความคิดเห็น', value: counts.totalComments },
+    { label: 'ผู้ใช้ทั้งหมด', value: counts.totalUsers },
   ];
 
   return (
     <div>
-      <h1 className="text-xl font-black mb-6" style={{ color: 'var(--text-primary)' }}>Dashboard</h1>
+      <h1 className="text-xl font-medium mb-6" style={{ color: 'var(--text-primary)' }}>Dashboard</h1>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {stats.map((s) => (
           <div key={s.label} className="card p-5">

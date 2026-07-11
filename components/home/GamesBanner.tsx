@@ -1,16 +1,15 @@
 import Link from 'next/link';
-import { GAMES_LIST } from '@/lib/games';
+import { getAllGamesFull } from '@/lib/supabase/queries/games';
 
-export default function GamesBanner() {
+export default async function GamesBanner() {
+  const games = await getAllGamesFull();
+
   return (
     <section className="max-w-7xl mx-auto px-4 py-8">
-      <h2 className="section-title">
-        Games
-        <div style={{ height: '3px', flex: 1, background: 'var(--gradient-hero)', borderRadius: '2px' }} />
-      </h2>
+      <h2 className="section-title">Games</h2>
 
       <div className="flex flex-col gap-4">
-        {GAMES_LIST.map((game) => (
+        {games.map((game) => (
           <Link
             key={game.code}
             href={`/games/${game.slug}`}
@@ -31,7 +30,7 @@ export default function GamesBanner() {
               <div style={{ color: game.accent, fontSize: '11px', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '2px' }}>
                 {game.subtitle}
               </div>
-              <h3 className="text-white font-black text-3xl md:text-4xl" style={{ textShadow: `0 0 30px ${game.accent}50` }}>
+              <h3 className="text-white font-medium text-3xl md:text-4xl" style={{ textShadow: `0 0 30px ${game.accent}50` }}>
                 {game.name}
               </h3>
               <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '12px', marginTop: '4px' }}>

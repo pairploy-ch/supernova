@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { getLatestArticles } from '@/lib/supabase/queries/articles';
+import { formatEventDateHeading } from '@/lib/formatDate';
 import type { Article } from '@/lib/types';
 
 const WEEKDAYS = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
@@ -21,17 +22,8 @@ function dateKey(d: Date) {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
-function ordinal(n: number) {
-  const j = n % 10;
-  const k = n % 100;
-  if (j === 1 && k !== 11) return `${n}ST`;
-  if (j === 2 && k !== 12) return `${n}ND`;
-  if (j === 3 && k !== 13) return `${n}RD`;
-  return `${n}TH`;
-}
-
 function dateHeading(d: Date) {
-  return `${WEEKDAYS[d.getDay()]}, ${MONTH_NAMES[d.getMonth()]} ${ordinal(d.getDate())}`;
+  return formatEventDateHeading(d.toISOString());
 }
 
 function normalizeYM(year: number, month: number) {
@@ -180,7 +172,7 @@ export default async function EventsPage({
                     >
                       <span className="day-num">{cell.day}</span>
                       {dayEvents.slice(0, 2).map((ev) => (
-                        <Link key={ev.id} href={`/news/${ev.slug}`} className="event-dot-item">
+                        <Link key={ev.id} href={`/events/${ev.slug}`} className="event-dot-item">
                           <span className="dot" style={{ background: colorByEventId.get(ev.id) }} />
                           <span className="line-clamp-1">{ev.title}</span>
                         </Link>
@@ -204,7 +196,7 @@ export default async function EventsPage({
               <div key={group.key}>
                 <div className="event-date-heading">{dateHeading(group.date)}</div>
                 {group.items.map((ev) => (
-                  <Link key={ev.id} href={`/news/${ev.slug}`} className="event-list-row">
+                  <Link key={ev.id} href={`/events/${ev.slug}`} className="event-list-row">
                     <span className="dot" style={{ background: colorByEventId.get(ev.id) }} />
                     <div className="body">
                       <h3>{ev.title}</h3>
@@ -221,7 +213,7 @@ export default async function EventsPage({
 
           {/* Sidebar */}
           <div className="card p-4" style={{ alignSelf: 'start' }}>
-            <h3 className="font-bold text-sm mb-2" style={{ color: 'var(--text-primary)' }}>Upcoming Events</h3>
+            <h3 className="font-medium text-sm mb-2" style={{ color: 'var(--text-primary)' }}>Upcoming Events</h3>
             {upcomingGroups.length === 0 && (
               <p className="text-xs" style={{ color: 'var(--text-muted)' }}>ยังไม่มีอีเว้นท์</p>
             )}
@@ -231,7 +223,7 @@ export default async function EventsPage({
                   {dateHeading(group.date)}
                 </p>
                 {group.items.map((ev) => (
-                  <Link key={ev.id} href={`/news/${ev.slug}`} className="sidebar-event-row">
+                  <Link key={ev.id} href={`/events/${ev.slug}`} className="sidebar-event-row">
                     <span className="dot" style={{ background: colorByEventId.get(ev.id) }} />
                     <div>
                       <h4>{ev.title}</h4>

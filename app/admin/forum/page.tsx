@@ -6,7 +6,7 @@ export default async function AdminForumPage() {
 
   return (
     <div>
-      <h1 className="text-xl font-black mb-6" style={{ color: 'var(--text-primary)' }}>จัดการกระทู้</h1>
+      <h1 className="text-xl font-medium mb-6" style={{ color: 'var(--text-primary)' }}>จัดการกระทู้</h1>
 
       <div className="card overflow-hidden">
         {threads.map((thread) => (

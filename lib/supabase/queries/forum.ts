@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { publicStorageUrl } from '@/lib/supabase/storage';
 import { logQueryError } from '@/lib/supabase/logError';
-import type { ForumThread, ForumReply } from '@/lib/types';
+import type { ForumThread, ForumReply, AvatarFrame } from '@/lib/types';
 import type { GameCode } from '@/lib/games';
 
 const PAGE_SIZE = 20;
@@ -19,11 +19,11 @@ type ThreadRow = {
   reply_count: number;
   view_count: number;
   created_at: string;
-  profiles: { display_name: string | null; username: string } | null;
+  profiles: { display_name: string | null; username: string; avatar_url: string | null; avatar_frame: string | null } | null;
 };
 
 const THREAD_COLUMNS =
-  'id, slug, title, body, game_code, author_id, image_path, is_pinned, is_locked, reply_count, view_count, created_at, profiles(display_name, username)';
+  'id, slug, title, body, game_code, author_id, image_path, is_pinned, is_locked, reply_count, view_count, created_at, profiles(display_name, username, avatar_url, avatar_frame)';
 
 function mapThread(row: ThreadRow): ForumThread {
   return {
@@ -34,6 +34,8 @@ function mapThread(row: ThreadRow): ForumThread {
     gameCode: row.game_code,
     authorId: row.author_id,
     authorName: row.profiles?.display_name || row.profiles?.username || 'Supernova',
+    authorAvatarUrl: publicStorageUrl('avatars', row.profiles?.avatar_url),
+    authorAvatarFrame: (row.profiles?.avatar_frame as AvatarFrame) ?? 'none',
     imageUrl: publicStorageUrl('forum-attachments', row.image_path),
     isPinned: row.is_pinned,
     isLocked: row.is_locked,
@@ -79,6 +81,19 @@ export async function getHotThreads(limit: number): Promise<ForumThread[]> {
     .order('view_count', { ascending: false })
     .limit(limit);
   logQueryError('getHotThreads', error);
+  return ((data ?? []) as unknown as ThreadRow[]).map(mapThread);
+}
+
+export async function getThreadsByAuthor(authorId: string, limit = 10): Promise<ForumThread[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('forum_threads')
+    .select(THREAD_COLUMNS)
+    .eq('author_id', authorId)
+    .is('deleted_at', null)
+    .order('created_at', { ascending: false })
+    .limit(limit);
+  logQueryError('getThreadsByAuthor', error);
   return ((data ?? []) as unknown as ThreadRow[]).map(mapThread);
 }
 
@@ -158,7 +173,7 @@ type ReplyRow = {
   body: string;
   image_path: string | null;
   created_at: string;
-  profiles: { username: string; display_name: string | null; avatar_url: string | null } | null;
+  profiles: { username: string; display_name: string | null; avatar_url: string | null; avatar_frame: string | null } | null;
 };
 
 export async function getReplies(threadId: string): Promise<ForumReply[]> {
@@ -166,7 +181,7 @@ export async function getReplies(threadId: string): Promise<ForumReply[]> {
   const { data, error } = await supabase
     .from('forum_replies')
     .select(
-      'id, thread_id, parent_reply_id, author_id, body, image_path, created_at, profiles(username, display_name, avatar_url)'
+      'id, thread_id, parent_reply_id, author_id, body, image_path, created_at, profiles(username, display_name, avatar_url, avatar_frame)'
     )
     .eq('thread_id', threadId)
     .is('deleted_at', null)
@@ -180,6 +195,7 @@ export async function getReplies(threadId: string): Promise<ForumReply[]> {
     authorId: row.author_id,
     authorName: row.profiles?.display_name || row.profiles?.username || 'ผู้ใช้',
     authorAvatarUrl: publicStorageUrl('avatars', row.profiles?.avatar_url),
+    authorAvatarFrame: (row.profiles?.avatar_frame as AvatarFrame) ?? 'none',
     imageUrl: publicStorageUrl('forum-attachments', row.image_path),
     body: row.body,
     createdAt: row.created_at,

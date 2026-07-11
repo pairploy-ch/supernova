@@ -1,9 +1,34 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useFormStatus } from 'react-dom';
 import { Search, ChevronDown, Menu, X, User, Settings, Shield, LogOut } from 'lucide-react';
 import { GAMES_LIST } from '@/lib/games';
 import { signOut } from '@/app/(auth)/actions';
+
+function LogoutButton() {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      style={{
+        background: 'var(--accent-pink)',
+        color: 'white', fontSize: '11px', fontWeight: 700,
+        padding: '5px 8px 5px 14px', borderRadius: '999px',
+        border: 'none', cursor: pending ? 'default' : 'pointer', letterSpacing: '0.05em',
+        display: 'flex', alignItems: 'center', gap: '6px',
+        opacity: pending ? 0.7 : 1,
+      }}
+    >
+      LOGOUT
+      <span style={{ background: 'rgba(255,255,255,0.25)', borderRadius: '50%', width: '16px', height: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {pending ? <span className="spinner-sm" /> : <LogOut size={9} />}
+      </span>
+    </button>
+  );
+}
 
 interface NavbarUser {
   username: string;
@@ -12,7 +37,13 @@ interface NavbarUser {
   role: 'user' | 'admin';
 }
 
+function isActivePath(pathname: string, href: string) {
+  if (href === '/') return pathname === '/';
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export default function NavbarClient({ user }: { user: NavbarUser | null }) {
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [gamesOpen, setGamesOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
@@ -83,21 +114,7 @@ export default function NavbarClient({ user }: { user: NavbarUser | null }) {
               </div>
 
               <form action={signOut}>
-                <button
-                  type="submit"
-                  style={{
-                    background: 'var(--accent-pink)',
-                    color: 'white', fontSize: '11px', fontWeight: 700,
-                    padding: '5px 8px 5px 14px', borderRadius: '999px',
-                    border: 'none', cursor: 'pointer', letterSpacing: '0.05em',
-                    display: 'flex', alignItems: 'center', gap: '6px',
-                  }}
-                >
-                  LOGOUT
-                  <span style={{ background: 'rgba(255,255,255,0.25)', borderRadius: '50%', width: '16px', height: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <LogOut size={9} />
-                  </span>
-                </button>
+                <LogoutButton />
               </form>
             </>
           ) : (
@@ -111,7 +128,7 @@ export default function NavbarClient({ user }: { user: NavbarUser | null }) {
               <Link
                 href="/signup"
                 style={{
-                  background: 'var(--cat-blue)',
+                  background: 'var(--accent-pink)',
                   color: 'white', fontSize: '11px', fontWeight: 700,
                   padding: '5px 14px', borderRadius: '999px',
                   textDecoration: 'none', letterSpacing: '0.05em',
@@ -146,7 +163,12 @@ export default function NavbarClient({ user }: { user: NavbarUser | null }) {
           <nav className="hidden md:flex items-center gap-1 flex-1">
             <Link
               href="/"
-              style={{ color: '#222', fontSize: '14px', fontWeight: 600, padding: '8px 14px', textDecoration: 'none' }}
+              style={{
+                color: isActivePath(pathname, '/') ? 'var(--accent-pink)' : '#222',
+                fontSize: '14px', fontWeight: 600, padding: '8px 14px',
+                textDecoration: isActivePath(pathname, '/') ? 'underline' : 'none',
+                textUnderlineOffset: '4px',
+              }}
             >
               Home
             </Link>
@@ -160,8 +182,11 @@ export default function NavbarClient({ user }: { user: NavbarUser | null }) {
               <button
                 style={{
                   display: 'flex', alignItems: 'center', gap: '4px',
-                  color: '#222', fontSize: '14px', fontWeight: 600,
+                  color: isActivePath(pathname, '/games') ? 'var(--accent-pink)' : '#222',
+                  fontSize: '14px', fontWeight: 600,
                   padding: '8px 14px', background: 'none', border: 'none', cursor: 'pointer',
+                  textDecoration: isActivePath(pathname, '/games') ? 'underline' : 'none',
+                  textUnderlineOffset: '4px',
                 }}
               >
                 Games
@@ -200,8 +225,11 @@ export default function NavbarClient({ user }: { user: NavbarUser | null }) {
                 key={item.href}
                 href={item.href}
                 style={{
-                  color: '#222', fontSize: '14px', fontWeight: 600,
-                  padding: '8px 14px', textDecoration: 'none',
+                  color: isActivePath(pathname, item.href) ? 'var(--accent-pink)' : '#222',
+                  fontSize: '14px', fontWeight: 600,
+                  padding: '8px 14px',
+                  textDecoration: isActivePath(pathname, item.href) ? 'underline' : 'none',
+                  textUnderlineOffset: '4px',
                 }}
               >
                 {item.label}
@@ -245,7 +273,14 @@ export default function NavbarClient({ user }: { user: NavbarUser | null }) {
               <Link
                 key={item.href}
                 href={item.href}
-                style={{ display: 'block', color: '#222', fontSize: '14px', fontWeight: 600, padding: '10px 0', textDecoration: 'none', borderBottom: '1px solid #f0f0f0' }}
+                style={{
+                  display: 'block',
+                  color: isActivePath(pathname, item.href) ? 'var(--accent-pink)' : '#222',
+                  fontSize: '14px', fontWeight: 600, padding: '10px 0',
+                  textDecoration: isActivePath(pathname, item.href) ? 'underline' : 'none',
+                  textUnderlineOffset: '4px',
+                  borderBottom: '1px solid #f0f0f0',
+                }}
                 onClick={() => setMenuOpen(false)}
               >
                 {item.label}

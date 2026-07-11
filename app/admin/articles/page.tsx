@@ -11,7 +11,7 @@ export default async function AdminArticlesPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-black" style={{ color: 'var(--text-primary)' }}>จัดการข่าว</h1>
+        <h1 className="text-xl font-medium" style={{ color: 'var(--text-primary)' }}>จัดการข่าว</h1>
         <Link href="/admin/articles/new" className="btn-primary text-sm">
           <Plus size={14} /> เพิ่มข่าว
         </Link>

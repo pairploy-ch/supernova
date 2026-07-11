@@ -11,10 +11,9 @@ export default async function GuideTips() {
   return (
     <section style={{ background: '#fff', borderTop: '1px solid #eee' }}>
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="section-title-wrap green">
+        <div className="section-title-wrap pink">
           <h2>Guide &amp; Tips</h2>
-          <div className="rule" />
-          <Link href="/news?category=gaming_gear" style={{ color: 'var(--cat-green)', border: '1px solid var(--cat-green)' }} className="text-xs font-bold px-3 py-1 rounded flex items-center gap-1 hover:opacity-80 transition-opacity flex-shrink-0">
+          <Link href="/news?category=gaming_gear" style={{ color: 'var(--accent-pink)', border: '1px solid var(--accent-pink)' }} className="text-xs font-bold px-3 py-1 rounded flex items-center gap-1 hover:opacity-80 transition-opacity flex-shrink-0">
             More <ChevronRight size={12} />
           </Link>
         </div>

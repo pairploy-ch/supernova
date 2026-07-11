@@ -1,6 +1,7 @@
 import type { GameCode } from '@/lib/games';
 
 export type ArticleCategory = 'news' | 'event' | 'gaming_gear' | 'aov' | 'mol' | 'val';
+export type AvatarFrame = 'none' | 'pink' | 'purple' | 'gold';
 
 export interface Article {
   id: string;
@@ -21,6 +22,7 @@ export interface ArticleComment {
   authorId: string | null;
   authorName: string;
   authorAvatarUrl: string | null;
+  authorAvatarFrame: AvatarFrame;
   body: string;
   createdAt: string;
 }
@@ -33,6 +35,8 @@ export interface ForumThread {
   gameCode: GameCode;
   authorId: string | null;
   authorName: string;
+  authorAvatarUrl: string | null;
+  authorAvatarFrame: AvatarFrame;
   imageUrl: string | null;
   isPinned: boolean;
   isLocked: boolean;
@@ -48,6 +52,7 @@ export interface ForumReply {
   authorId: string | null;
   authorName: string;
   authorAvatarUrl: string | null;
+  authorAvatarFrame: AvatarFrame;
   imageUrl: string | null;
   body: string;
   createdAt: string;
@@ -59,6 +64,9 @@ export interface PublicProfile {
   username: string;
   displayName: string | null;
   avatarUrl: string | null;
+  coverImageUrl: string | null;
+  avatarFrame: AvatarFrame;
   bio: string | null;
+  gameIds: Partial<Record<GameCode, string>>;
   createdAt: string;
 }

@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, MessageSquare } from 'lucide-react';
 import { getPublishedArticles, getLatestArticles } from '@/lib/supabase/queries/articles';
 import { ARTICLE_CATEGORIES, ARTICLE_CATEGORY_META } from '@/lib/articleCategory';
 import { formatThaiDate } from '@/lib/formatDate';
+import AdBanner from '@/components/AdBanner';
 import type { ArticleCategory } from '@/lib/types';
 
 function buildHref(category?: ArticleCategory, page?: number) {
@@ -117,8 +118,14 @@ export default async function NewsPage({
 
           {/* Sidebar */}
           <div className="space-y-6">
-            <div className="card p-4">
-              <h3 className="font-bold text-sm mb-3" style={{ color: 'var(--text-primary)' }}>บทความล่าสุด</h3>
+            <AdBanner />
+
+            <div className="p-4">
+              <div className="section-title-wrap pink" style={{ marginBottom: '16px' }}>
+                <h3 style={{ color: '#111', fontWeight: 500, fontSize: '14px', letterSpacing: '0.05em', textTransform: 'uppercase', margin: 0 }}>
+                  บทความล่าสุด
+                </h3>
+              </div>
               {popular.map((article) => (
                 <Link
                   key={article.id}
@@ -127,9 +134,9 @@ export default async function NewsPage({
                   style={{ borderBottom: '1px solid var(--border-color)', padding: '10px 0' }}
                 >
                   {article.coverImageUrl ? (
-                    <img src={article.coverImageUrl} alt="" style={{ width: '56px', height: '44px', objectFit: 'cover', borderRadius: '6px', flexShrink: 0 }} />
+                    <img src={article.coverImageUrl} alt="" style={{ width: '56px', height: '44px', objectFit: 'cover', borderRadius: 0, flexShrink: 0 }} />
                   ) : (
-                    <div style={{ width: '56px', height: '44px', borderRadius: '6px', flexShrink: 0, background: 'var(--bg-card)' }} />
+                    <div style={{ width: '56px', height: '44px', borderRadius: 0, flexShrink: 0, background: 'var(--bg-card)' }} />
                   )}
                   <div className="min-w-0">
                     <p className="text-xs font-bold line-clamp-2" style={{ color: 'var(--text-primary)' }}>{article.title}</p>
@@ -142,11 +149,20 @@ export default async function NewsPage({
               )}
             </div>
 
-            <div className="card p-4">
-              <h3 className="font-bold text-sm mb-3" style={{ color: 'var(--text-primary)' }}>หมวดหมู่</h3>
+            <div className="p-4">
+              <div className="section-title-wrap pink" style={{ marginBottom: '16px' }}>
+                <h3 style={{ color: '#111', fontWeight: 500, fontSize: '14px', letterSpacing: '0.05em', textTransform: 'uppercase', margin: 0 }}>
+                  หมวดหมู่
+                </h3>
+              </div>
               <div className="flex flex-wrap gap-2">
                 {ARTICLE_CATEGORIES.map((c) => (
-                  <Link key={c} href={buildHref(c)} className="tab-btn">
+                  <Link
+                    key={c}
+                    href={buildHref(c)}
+                    className="tab-btn"
+                    style={{ borderColor: ARTICLE_CATEGORY_META[c].hex, color: ARTICLE_CATEGORY_META[c].hex }}
+                  >
                     {ARTICLE_CATEGORY_META[c].filterLabel}
                   </Link>
                 ))}
@@ -154,7 +170,7 @@ export default async function NewsPage({
             </div>
 
             <Link href="/community" className="card p-4 block">
-              <h3 className="font-bold text-sm mb-1 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+              <h3 className="font-medium text-sm mb-1 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                 <MessageSquare size={14} /> ไปที่ Community
               </h3>
               <p className="text-xs" style={{ color: 'var(--text-muted)' }}>พูดคุยกับเกมเมอร์คนอื่นๆ</p>

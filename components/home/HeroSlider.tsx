@@ -38,7 +38,7 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
         }}
       >
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 40px', width: '100%' }}>
-          <h1 style={{ color: 'white', fontSize: 'clamp(24px, 4vw, 42px)', fontWeight: 900 }}>
+          <h1 style={{ color: 'white', fontSize: 'clamp(24px, 4vw, 42px)', fontWeight: 500 }}>
             ยินดีต้อนรับสู่ Supernova
           </h1>
         </div>
@@ -49,7 +49,7 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
   const slide = slides[current];
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '420px', overflow: 'hidden' }}>
+    <div style={{ position: 'relative', width: '100%', height: '480px', overflow: 'hidden' }}>
       {/* Background layers */}
       {slides.map((s, i) => (
         <div
@@ -71,13 +71,13 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
 
       {/* Content */}
       <div style={{ position: 'relative', zIndex: 10, maxWidth: '1280px', margin: '0 auto', padding: '0 40px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-        <div style={{ maxWidth: '520px' }}>
+        <div style={{ maxWidth: '560px' }}>
           <div
             key={`badge-${current}`}
             style={{
               display: 'inline-block', background: slide.badgeColor, color: 'white',
               fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase',
-              padding: '4px 12px', borderRadius: '4px', marginBottom: '16px',
+              padding: '5px 14px', borderRadius: '2px', marginBottom: '20px',
               animation: 'fadeSlideUp 0.5s ease both',
             }}
           >
@@ -86,7 +86,7 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
 
           <h1
             key={`title-${current}`}
-            style={{ color: 'white', fontSize: 'clamp(24px, 4vw, 42px)', fontWeight: 900, lineHeight: 1.15, marginBottom: '16px', animation: 'fadeSlideUp 0.55s 0.05s ease both' }}
+            style={{ color: 'white', fontSize: 'clamp(28px, 5vw, 54px)', fontWeight: 500, lineHeight: 1.1, marginBottom: '18px', animation: 'fadeSlideUp 0.55s 0.05s ease both' }}
           >
             {slide.title}
           </h1>
@@ -105,13 +105,15 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
               href={`/news/${slide.slug}`}
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: 0,
-                background: 'linear-gradient(90deg, #e91e8c, #f06292)', borderRadius: '999px',
+                background: 'var(--accent-pink)', borderRadius: '999px',
                 textDecoration: 'none', overflow: 'hidden',
               }}
             >
-              <span style={{ color: 'white', fontWeight: 700, fontSize: '14px', padding: '11px 24px' }}>Read More</span>
-              <span style={{ background: 'rgba(255,255,255,0.2)', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', margin: '2px 2px 2px 0' }}>
-                <ChevronRight size={16} color="white" />
+              <span style={{ color: 'white', fontWeight: 700, fontSize: '13px', letterSpacing: '0.05em', textTransform: 'uppercase', padding: '13px 26px' }}>
+                Go to the Article
+              </span>
+              <span style={{ background: '#b3166b', width: '42px', height: '42px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', margin: '3px 3px 3px 0' }}>
+                <ChevronRight size={17} color="white" />
               </span>
             </Link>
           </div>
@@ -125,7 +127,7 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
             key={s.slug}
             onClick={() => setCurrent(i)}
             className={`dot-indicator ${i === current ? 'active' : ''}`}
-            style={{ width: i === current ? '28px' : '10px', border: 'none', padding: 0 }}
+            style={{ border: 'none', padding: 0 }}
           />
         ))}
       </div>

@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { publicStorageUrl } from '@/lib/supabase/storage';
 import { logQueryError } from '@/lib/supabase/logError';
-import type { Article, ArticleComment, ArticleCategory } from '@/lib/types';
+import type { Article, ArticleComment, ArticleCategory, AvatarFrame } from '@/lib/types';
 import type { GameCode } from '@/lib/games';
 
 const PAGE_SIZE = 12;
@@ -168,14 +168,14 @@ type CommentRow = {
   author_id: string | null;
   body: string;
   created_at: string;
-  profiles: { username: string; display_name: string | null; avatar_url: string | null } | null;
+  profiles: { username: string; display_name: string | null; avatar_url: string | null; avatar_frame: string | null } | null;
 };
 
 export async function getArticleComments(articleId: string): Promise<ArticleComment[]> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from('article_comments')
-    .select('id, article_id, author_id, body, created_at, profiles(username, display_name, avatar_url)')
+    .select('id, article_id, author_id, body, created_at, profiles(username, display_name, avatar_url, avatar_frame)')
     .eq('article_id', articleId)
     .is('deleted_at', null)
     .order('created_at', { ascending: true });
@@ -187,6 +187,7 @@ export async function getArticleComments(articleId: string): Promise<ArticleComm
     authorId: row.author_id,
     authorName: row.profiles?.display_name || row.profiles?.username || 'ผู้ใช้',
     authorAvatarUrl: publicStorageUrl('avatars', row.profiles?.avatar_url),
+    authorAvatarFrame: (row.profiles?.avatar_frame as AvatarFrame) ?? 'none',
     body: row.body,
     createdAt: row.created_at,
   }));
